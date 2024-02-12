@@ -1,0 +1,42 @@
+ <?php
+    if (isset($_POST['email'])) {
+
+        // Debes editar las próximas dos líneas de código de acuerdo con tus preferencias
+        $email_to = "reservas@viajesarlandi.com";
+        $email_subject = "Reserva";
+
+        // Aquí se deberían validar los datos ingresados por el usuario
+        if (
+            !isset($_POST['fullname']) ||
+            !isset($_POST['lastname']) ||
+            !isset($_POST['email']) ||
+            !isset($_POST['cellphone']) ||
+            !isset($_POST['destination']) ||
+            !isset($_POST['activities']) ||
+            !isset($_POST['datef']) ||
+            !isset($_POST['date-finish'])
+        ) {
+
+            echo "<b>Ocurrió un error y el formulario no ha sido enviado. </b><br />";
+            echo "Por favor, vuelva atrás y verifique la información ingresada<br />";
+            die();
+        }
+
+        $email_message = "Detalles del formulario de contacto:\n\n";
+        $email_message .= "Nombre: " . $_POST['fullname'] . "\n";
+        $email_message .= "Apellido: " . $_POST['lastname'] . "\n";
+        $email_message .= "E-mail: " . $_POST['email'] . "\n";
+        $email_message .= "Teléfono: " . $_POST['cellphone'] . "\n";
+        $email_message .= "Destino: " . $_POST['destination'] . "\n";
+        $email_message .= "Destino: " . $_POST['activities'] . "\n";
+        $email_message .= "Fecha Inicio: " . $_POST['datef'] . "\n";
+        $email_message .= "Fecha: " . $_POST['date-finish'] . "\n\n";
+
+        // Ahora se envía el e-mail usando la función mail() de PHP
+        $headers = 'From: ' . $email_from . "\r\n" .
+            'Reply-To: ' . $email_from . "\r\n" .
+            'X-Mailer: PHP/' . phpversion();
+        @mail($email_to, $email_subject, $email_message, $headers);
+
+        echo "¡El formulario se ha enviado con éxito!";
+    }
